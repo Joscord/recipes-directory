@@ -1,3 +1,5 @@
+import './RecipesList.css'
+
 const RecipesList = ({recipes}) => {
     return (
             recipes.map((recipe) => (
