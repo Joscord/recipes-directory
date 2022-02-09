@@ -1,16 +1,37 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './Create.css';
 
 const Create = () => {
-	// Crearemos 3 piezas de estado para almacenar la información introducida por el usuario. Estas piezas serán el título, el tiempo de cocción y el método. Los ingredientes los manejaremos después
 	const [title, setTitle] = useState('');
 	const [method, setMethod] = useState('');
 	const [cookingTime, setcookingTime] = useState('');
+	// Creamos una pieza de estado para el ingrediente que vamos a agregar
+	const [newIngredient, setNewIngredient] = useState('');
+	// Creamos una pieza de estado para los ingredientes
+	const [ingredients, setIngredients] = useState([]);
+	// Usamos una referencia para manejar el focus hacia el input del ingrediente
+	const ingredientInputRef = useRef(null);
 
-  // Función para manejar el envío del formulario
-  const handleSubmit = e => {
-    e.preventDefault();
-  }
+	const handleSubmit = e => {
+		e.preventDefault();
+	};
+
+	// Definimos una función para añadir el ingrediente nuevo al arreglo
+	const handleClick = e => {
+		// Prevenimos el comportamiento por default
+		e.preventDefault();
+		// Dejamos todo sin espacio y en minúsculas para poder comparar
+		const newIng = newIngredient.trim().toLowerCase();
+		// Comprobamos si el ingrediente nuevo existe y si no está en el arreglo
+		if (newIng && !ingredients.includes(newIng)) {
+			setIngredients(prevIngredients => [...prevIngredients, newIng]);
+		}
+    // Reseteamos el valor del input
+    setNewIngredient('');
+    // Usamos el método focus para devolver el focus hacia el input, a través de la ref
+    ingredientInputRef.current.focus();
+		console.log(ingredients);
+	};
 
 	return (
 		<div className='create'>
@@ -26,6 +47,21 @@ const Create = () => {
 					/>
 				</label>
 				<label>
+					<span>Recipe Ingredients:</span>
+					<div className='ingredients'>
+						{/* Lo que haremos es ir añadiendo un ingrediente a la vez */}
+						<input
+							type='text'
+							value={newIngredient}
+							onChange={e => setNewIngredient(e.target.value)}
+              ref={ingredientInputRef}
+						/>
+						<button className='button' onClick={handleClick}>
+							Add
+						</button>
+					</div>
+				</label>
+				<label>
 					<span>Recipe Method:</span>
 					<textarea
 						onChange={e => setMethod(e.target.value)}
@@ -33,19 +69,19 @@ const Create = () => {
 						required
 					/>
 				</label>
-        <label>
+				<label>
 					<span>Cooking Time (minutes):</span>
 					<input
-            type='number'
+						type='number'
 						onChange={e => setcookingTime(e.target.value)}
 						value={cookingTime}
-            required
+						required
 					/>
 				</label>
-        <button className='button'>Submit</button>
+				<button className='button'>Submit</button>
 			</form>
 		</div>
 	);
-}; 
+};
 
 export default Create;
