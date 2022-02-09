@@ -1,6 +1,6 @@
 import './Home.css';
 import { useFetch } from '../../hooks/useFetch';
-import RecipesList from './RecipesList'
+import RecipesList from '../../components/RecipesList/RecipesList'
 
 const Home = () => {
   const url = 'http://localhost:3000/recipes'

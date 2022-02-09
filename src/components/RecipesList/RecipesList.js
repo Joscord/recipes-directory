@@ -1,9 +1,9 @@
-import Recipe from './Recipe'
-
 const RecipesList = ({recipes}) => {
     return (
             recipes.map((recipe) => (
-                <Recipe key={recipe.id} recipe={recipe}/>
+                <div>
+                    <h2>{recipe.title}</h2>
+                </div>
             ))
     )
 }
