@@ -4,11 +4,13 @@ import Recipe from './pages/Recipe/Recipe';
 import Search from './pages/Search/Search';
 import Create from './pages/Create/Create';
 import './App.css';
+import Navbar from './components/Navbar/Navbar';
 
 const App = () => {
   return (
     <BrowserRouter>
       <div className="app">
+        <Navbar/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/recipe' component={Recipe}/>
