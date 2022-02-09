@@ -7,7 +7,7 @@ const Home = () => {
   const { data: recipes, isPending, error } = useFetch(url);  
 
   return (
-    <div>
+    <div className='home'>
       {error && <p className='error'>{error}</p>}
       {isPending && <p className='loading'>Loading Recipes...</p>}
       {recipes && <RecipesList recipes={recipes}/>}
