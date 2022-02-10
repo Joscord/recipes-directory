@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useState } from 'react' 
 import './SearchBar.css';
 
 const SearchBar = () => {
