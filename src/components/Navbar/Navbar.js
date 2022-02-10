@@ -1,18 +1,14 @@
 import { Link } from 'react-router-dom';
-// Para acceder al contexto usamos un hook llamado useContext
-import { useContext } from 'react';
-// Importamos el contexto NO el proveedor
-import { ThemeContext } from '../../context/ThemeContext';
+// Importamos el custom-hook useTheme
+import useTheme from '../../hooks/useTheme';
 import SearchBar from '../SearchBar/SearchBar';
 import './Navbar.css';
 
 const Navbar = () => {
-	// Usamos el hook para acceder al contexto. Esto nos provee con el valor del objeto pasado en la prop value.
-	const { color } = useContext(ThemeContext);
-
+	// Invocamos el custom hook. El custom hook nos devuelve el objeto de value y destructuramos la prop de color de este
+	const { color } = useTheme();
 	return (
-        // Podemos ahora usar el color, por ejemplo para estilizar el navbar
-		<div className='navbar' style={{background: color}}>
+		<div className='navbar' style={{ background: color }}>
 			<nav>
 				<Link className='brand' to='/'>
 					<h1>Recipe Directory App</h1>
