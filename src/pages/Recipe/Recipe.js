@@ -3,7 +3,7 @@ import { useFetch } from '../../hooks/useFetch';
 import './Recipe.css';
 
 const Recipe = () => {
-	// Usamos URLSearchParams y useParams para obtener los parámetros de ruta de la URL, específicamente el id
+	// Usamos useParams para obtener los parámetros de ruta de la URL, específicamente el id
 	const { id } = useParams();
 	// Invocamos a useFetch y obtenemos la data
 	const {
