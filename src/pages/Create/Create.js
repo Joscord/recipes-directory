@@ -30,7 +30,6 @@ const Create = () => {
     setNewIngredient('');
     // Usamos el método focus para devolver el focus hacia el input, a través de la ref
     ingredientInputRef.current.focus();
-		console.log(ingredients);
 	};
 
 	return (
@@ -61,6 +60,14 @@ const Create = () => {
 						</button>
 					</div>
 				</label>
+        {/* Mostramos los ingredientes que llevamos agregados */}
+        <p>
+          {
+            ingredients && ingredients.map(ingredient => (
+              <em key={ingredient}>{ingredient}, </em>
+            ))
+          }
+        </p>
 				<label>
 					<span>Recipe Method:</span>
 					<textarea
