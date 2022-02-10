@@ -1,39 +1,45 @@
-// Importamos useReducer
 import { createContext, useReducer } from 'react';
 
 export const ThemeContext = createContext();
 
-// Definimos la función reductora. Dos parámetros, el estado actual y la acción despachada (el objeto acción) por la función de dispatch. Esta función luego retorna un nuevo estado.
 const themeReducer = (state, action) => {
-    // Podemos usar switch para revisar las acciones
-    switch (action.type) {
-        case 'CHANGE_COLOR':
+	switch (action.type) {
+		case 'CHANGE_COLOR':
+			return {
+				...state,
+				color: action.payload,
+			};
+        case 'CHANGE_MODE':
             return {
+                // Es importante recordar que debemos hacer spread del estado viejo y cambiarlo añadiendo la propiedad nueva, no devolver un estado "nuevo"
                 ...state,
-                color: action.payload
+                mode: action.payload,
             }
-        default:
-            return state
-    }
-}
-// Definimos el estado inicial o por defecto
+		default:
+			return state;
+	}
+};
+// Modificamos el estado por default añadiendo una nueva propiedad, el modo
 const defaultState = {
-    color: '#58249c'
-}
+	color: '#58249c',
+	mode: 'light',
+};
 
 export const ThemeProvider = ({ children }) => {
-	const [color, dispatchColor] = useReducer(themeReducer, defaultState);
+	const [state, dispatchState] = useReducer(themeReducer, defaultState);
 
-	const changeColor = newColor => {
-		dispatchColor({
+	const changeColor = newColor =>
+		dispatchState({
 			type: 'CHANGE_COLOR',
-			payload: newColor
-		})
-	}
+			payload: newColor,
+		});
+
+	// Creamos una función para cambiar el modo
+	const changeMode = newMode =>
+		dispatchState({ type: 'CHANGE_MODE', payload: newMode });
 
 	return (
-        // Pasamos el estado de theme como valor, nótese que usamos el ... para pasar todas las propiedades de ese estado
-		<ThemeContext.Provider value={{...color, changeColor}}>
+		<ThemeContext.Provider value={{ ...state, changeColor, changeMode }}>
 			{children}
 		</ThemeContext.Provider>
 	);
