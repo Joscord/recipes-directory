@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './RecipesList.css';
 
 const RecipesList = ({ recipes }) => {
+	if (recipes.length === 0) return <div className='error'>No Recipes to Load</div>
 	return (
 		<div className='recipes-list'>
 			{recipes.map(({ id, title, cookingTime, method }) => (
@@ -9,7 +10,6 @@ const RecipesList = ({ recipes }) => {
 					<h2>{title}</h2>
 					<p>{cookingTime} to make.</p>
 					<div>
-						{/* Nótese que creamos un substring del método para luego mostrar más info cuando la persona navegue al detalle de la receta */}
 						{method.substring(0, 100)}
 						<Link to={`/recipes/${id}`}>More info!</Link>
 					</div>

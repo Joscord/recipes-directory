@@ -3,9 +3,7 @@ import { useFetch } from '../../hooks/useFetch';
 import './Recipe.css';
 
 const Recipe = () => {
-	// Usamos useParams para obtener los parámetros de ruta de la URL, específicamente el id
 	const { id } = useParams();
-	// Invocamos a useFetch y obtenemos la data
 	const {
 		data: recipe,
 		isPending,
@@ -22,7 +20,6 @@ const Recipe = () => {
 					<ul>
             {
               recipe.ingredients.map(ing => (
-                // Usamos el ingrediente como llave, más adelante nos aseguraremos que no hay ingredientes repetidos
                 <li key={ing}>{ing}</li>
               ))
             }
