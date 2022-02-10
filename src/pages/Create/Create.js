@@ -1,34 +1,37 @@
 import { useRef, useState } from 'react';
+// Importamos useFetch
+import { useFetch } from '../../hooks/useFetch';
 import './Create.css';
 
 const Create = () => {
 	const [title, setTitle] = useState('');
 	const [method, setMethod] = useState('');
 	const [cookingTime, setcookingTime] = useState('');
-	// Creamos una pieza de estado para el ingrediente que vamos a agregar
 	const [newIngredient, setNewIngredient] = useState('');
-	// Creamos una pieza de estado para los ingredientes
 	const [ingredients, setIngredients] = useState([]);
-	// Usamos una referencia para manejar el focus hacia el input del ingrediente
 	const ingredientInputRef = useRef(null);
+	// Destructuramos las cosas que necesitamos de useFetch. El endpoint que pasamos para hacer un post request es el mismo que para hacer un get request. Pasamos también el segundo argumento, el método.
+	const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		// Invocamos a la función postData. Pasamos el objeto que será la data a añadir al JSON
+		postData({
+			title,
+			ingredients,
+			method,
+			// En db.json el tiempo de cocción aparece con 'minutes' por lo que se lo concatenamos. Nótese que no debemos pasar un id dado que json-server añade una automáticamente
+			cookingTime: cookingTime+' minutes'
+		})
 	};
 
-	// Definimos una función para añadir el ingrediente nuevo al arreglo
 	const handleClick = e => {
-		// Prevenimos el comportamiento por default
 		e.preventDefault();
-		// Dejamos todo sin espacio y en minúsculas para poder comparar
 		const newIng = newIngredient.trim().toLowerCase();
-		// Comprobamos si el ingrediente nuevo existe y si no está en el arreglo
 		if (newIng && !ingredients.includes(newIng)) {
 			setIngredients(prevIngredients => [...prevIngredients, newIng]);
 		}
-    // Reseteamos el valor del input
     setNewIngredient('');
-    // Usamos el método focus para devolver el focus hacia el input, a través de la ref
     ingredientInputRef.current.focus();
 	};
 
