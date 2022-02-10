@@ -36,6 +36,19 @@
       ],
       "method": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse minima ex rem quis similique eum ratione quaerat, voluptas molestias ut repudiandae delectus voluptates. Eius esse at tenetur ab accusamus excepturi?",
       "cookingTime": "35 minutes"
+    },
+    {
+      "title": "Pizza",
+      "ingredients": [
+        "mushrooms",
+        "tomatoes",
+        "cheese",
+        "flour",
+        "pepperoni"
+      ],
+      "method": "Mix it all in a bowl then put the bowl with the mix in the oven and wait for the best",
+      "cookingTime": "33 minutes",
+      "id": "PoTXnvL"
     }
   ]
 }

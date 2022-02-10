@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 // Ahora nuestro hook acepta un parámetro adicional: el método
 export const useFetch = (url, method = 'GET') => {

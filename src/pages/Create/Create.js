@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-// Importamos useFetch
+import { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useFetch } from '../../hooks/useFetch';
 import './Create.css';
 
@@ -10,17 +10,24 @@ const Create = () => {
 	const [newIngredient, setNewIngredient] = useState('');
 	const [ingredients, setIngredients] = useState([]);
 	const ingredientInputRef = useRef(null);
-	// Destructuramos las cosas que necesitamos de useFetch. El endpoint que pasamos para hacer un post request es el mismo que para hacer un get request. Pasamos también el segundo argumento, el método.
-	const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
+	// Usamos el hook useHistory para manejar el historial del usuario obteniendo una instancia del historial
+	const history = useHistory();
+	const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST');
+	// Podemos usar useEffect en este componente y ver cómo varía data
+	useEffect(() => {
+		// Si data es distinto de null (es decir si obtenemos un objeto de respuesta de la solicitud POST)...
+		if (data) {
+			// Redirigimos con el método push de history
+			history.push('/');
+		}
+	}, [data]);
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		// Invocamos a la función postData. Pasamos el objeto que será la data a añadir al JSON
 		postData({
 			title,
 			ingredients,
 			method,
-			// En db.json el tiempo de cocción aparece con 'minutes' por lo que se lo concatenamos. Nótese que no debemos pasar un id dado que json-server añade una automáticamente
 			cookingTime: cookingTime+' minutes'
 		})
 	};
@@ -51,7 +58,6 @@ const Create = () => {
 				<label>
 					<span>Recipe Ingredients:</span>
 					<div className='ingredients'>
-						{/* Lo que haremos es ir añadiendo un ingrediente a la vez */}
 						<input
 							type='text'
 							value={newIngredient}
@@ -63,7 +69,6 @@ const Create = () => {
 						</button>
 					</div>
 				</label>
-        {/* Mostramos los ingredientes que llevamos agregados */}
         <p>
           {
             ingredients && ingredients.map(ingredient => (
