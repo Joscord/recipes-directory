@@ -6,11 +6,15 @@ import Create from './pages/Create/Create';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import ThemeSelector from './components/ThemeSelector/ThemeSelector';
+import useTheme from './hooks/useTheme';
 
 const App = () => {
+  // Destructuramos el modo de nuestro hook customizado
+  const { mode } = useTheme();
   return (
     <BrowserRouter>
-      <div className="app">
+      {/* Usando template strings damos una clase de light o dark dependiendo del modo. Además de la clase App */}
+      <div className={`${mode} app`}>
         <Navbar/>
         <ThemeSelector/>
         <Switch>
