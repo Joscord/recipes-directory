@@ -5,12 +5,14 @@ import Search from './pages/Search/Search';
 import Create from './pages/Create/Create';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
+import ThemeSelector from './components/ThemeSelector/ThemeSelector';
 
 const App = () => {
   return (
     <BrowserRouter>
       <div className="app">
         <Navbar/>
+        <ThemeSelector/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/recipes/:id' component={Recipe}/>

@@ -1,4 +1,4 @@
-import './ThemeSelector';
+import './ThemeSelector.css';
 // Importamos el custom hook del contexto
 import useTheme from '../../hooks/useTheme';
 
@@ -21,4 +21,4 @@ const ThemeSelector = () => {
   )
 }
 
-export default ThemeSelector
+export default ThemeSelector;
