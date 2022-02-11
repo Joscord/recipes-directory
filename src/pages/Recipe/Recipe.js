@@ -40,7 +40,7 @@ const Recipe = () => {
 			}
 		}
 		firestoreFetch(id);
-	}, [])
+	}, [id])
 
 	return (
 		<div className={`recipe ${mode}`}>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { projectFirestore } from '../../firebase/config';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useFetch } from '../../hooks/useFetch';
 import './Create.css';
 
 const Create = () => {
@@ -10,26 +10,28 @@ const Create = () => {
 	const [newIngredient, setNewIngredient] = useState('');
 	const [ingredients, setIngredients] = useState([]);
 	const ingredientInputRef = useRef(null);
-	// Usamos el hook useHistory para manejar el historial del usuario obteniendo una instancia del historial
 	const history = useHistory();
-	const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST');
-	// Podemos usar useEffect en este componente y ver cómo varía data
-	useEffect(() => {
-		// Si data es distinto de null (es decir si obtenemos un objeto de respuesta de la solicitud POST)...
-		if (data) {
-			// Redirigimos con el método push de history
-			history.push('/');
-		}
-	}, [data]);
 
-	const handleSubmit = e => {
+	// Convertiremos esta función en asíncrona para así poder usar await
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		postData({
+		// Este es el documento que queremos envíar
+		const doc = {
 			title,
 			ingredients,
 			method,
 			cookingTime: cookingTime+' minutes'
-		})
+		}
+		// Usamos un bloque try catch sólo para detectar cualquier error
+		try {
+			// Para añadir el proyecto a la colección. El método add agrega el documento y también un id automático. Nótese que usamos await para que espere este proceso antes de seguir a la siguiente línea
+			await projectFirestore.collection('recipes').add(doc);
+			// Redireccionamos al usuario
+			history.push('/');
+			
+		} catch (err) {
+			console.log(err.message)
+		}
 	};
 
 	const handleClick = e => {
